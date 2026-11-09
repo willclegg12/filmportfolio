@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subtitling Portfolio — Will Clegg</title>
+<style>
+:root {
+  --bg: #f5f2ee;
+  --bg-card: #ffffff;
+  --text: #1a1a1a;
+  --text-secondary: #5a5550;
+  --accent: #c4362c;
+  --border: #e0dbd5;
+  --tag-bg: #eae6e0;
+  --tag-text: #6b6560;
+  --hero-bg: #1c2028;
+  --hero-text: #f0ece6;
+  --hero-sub: #a8a29e;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141618; --bg-card: #1e2024; --text: #e8e4de; --text-secondary: #9a958e;
+    --accent: #e05a50; --border: #2e3038; --tag-bg: #2a2c32; --tag-text: #9a958e;
+    --hero-bg: #0c0e12; --hero-text: #e8e4de; --hero-sub: #78736c; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141618; --bg-card: #1e2024; --text: #e8e4de; --text-secondary: #9a958e;
+  --accent: #e05a50; --border: #2e3038; --tag-bg: #2a2c32; --tag-text: #9a958e;
+  --hero-bg: #0c0e12; --hero-text: #e8e4de; --hero-sub: #78736c; color-scheme: dark;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+.hero {
+  background: var(--hero-bg); color: var(--hero-text);
+  padding: 80px 24px 72px; text-align: center;
+}
+.hero h1 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 400;
+  letter-spacing: -0.01em; line-height: 1.15; text-wrap: balance; margin-bottom: 16px;
+}
+.hero .subtitle { font-size: 1.05rem; color: var(--hero-sub); max-width: 540px; margin: 0 auto 28px; }
+.hero .contact {
+  font-size: 0.88rem; color: var(--hero-sub);
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 20px;
+}
+.hero .contact a { color: var(--hero-sub); text-decoration: none; }
+.hero .contact a:hover { color: var(--hero-text); }
+.intro { max-width: 680px; margin: 0 auto; padding: 56px 24px 40px; font-size: 1.02rem; color: var(--text-secondary); }
+.intro p + p { margin-top: 12px; }
+.films { max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; display: flex; flex-direction: column; gap: 56px; }
+.film {
+  display: grid; grid-template-columns: 280px 1fr; gap: 32px; align-items: start;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 28px;
+}
+.film-poster { width: 100%; border-radius: 8px; overflow: hidden; background: var(--tag-bg); }
+.film-poster img { width: 100%; height: auto; display: block; object-fit: cover; }
+.film-info h2 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.55rem; font-weight: 400; line-height: 1.25; margin-bottom: 2px;
+}
+.film-info .cn-title { font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 10px; }
+.film-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.tag {
+  display: inline-block; background: var(--tag-bg); color: var(--tag-text);
+  font-size: 0.78rem; font-weight: 500; padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+}
+.film-info .description { font-size: 0.94rem; color: var(--text-secondary); margin-bottom: 14px; }
+.film-info .credits { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.65; }
+.credits strong { color: var(--text); font-weight: 500; }
+.festivals { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.84rem; color: var(--text-secondary); }
+.festivals .label { font-weight: 600; color: var(--accent); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.poster-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; border-radius: 8px; overflow: hidden; }
+.poster-strip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.poster-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; border-radius: 8px; overflow: hidden; }
+.poster-duo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.footer { text-align: center; padding: 40px 24px; font-size: 0.84rem; color: var(--text-secondary); border-top: 1px solid var(--border); }
+@media print {
+  .hero { background: #1c2028 !important; color: #f0ece6 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .hero .subtitle, .hero .contact, .hero .contact a { color: #a8a29e !important; }
+  .film { break-inside: avoid; page-break-inside: avoid; }
+  .film-poster img { loading: eager; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .tag { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+@media (max-width: 700px) {
+  .film { grid-template-columns: 1fr; gap: 20px; padding: 20px; }
+  .film-poster { max-width: 320px; }
+  .hero { padding: 56px 20px 48px; }
+  .intro { padding: 40px 20px 28px; }
+  .films { padding: 0 16px 60px; gap: 40px; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>Film Subtitling Portfolio</h1>
+  <p class="subtitle">Chinese&ndash;English subtitling for independent film, documentary, and series. From award-winning shorts to feature-length narratives.</p>
+  <div class="contact">
+    <span>Will Clegg</span>
+    <span>Chinese to English</span>
+    <span>WeChat: +86 186215 37176</span>
+    <span>WhatsApp: +44 7436 899599</span>
+    <a href="https://www.linkedin.com/in/william-clegg-629455a0/">LinkedIn</a>
+  </div>
+</header>
+
+<section class="intro">
+  <p>A selection of films and documentaries I have subtitled from Chinese into English, working directly with independent directors and production companies across China, France, Taiwan, and Japan. My work spans award-winning documentaries, festival-circuit shorts, narrative features, and episodic series.</p>
+  <p>I bring subject-matter fluency, cultural sensitivity, and a deep understanding of Chinese filmmaking to every project. I lived and worked in China for over a decade before returning to the UK.</p>
+</section>
+
+<section class="films">
+
+  <!-- 1. The Wind Recoils (2026) -->
+  <article class="film">
+    <div class="film-poster">
+      <img src="img/wind-recoils.png" alt="The Wind Recoils poster">
+    </div>
+    <div class="film-info">
+      <h2>The Wind Recoils</h2>
+      <div class="cn-title">山风蛊</div>
+      <div class="film-meta">
+        <span class="tag">Fiction Feature</span>
+        <span class="tag">106 min</span>
+        <span class="tag">2026</span>
+        <span class="tag">China / Japan</span>
+      </div>
+      <p class="description">A forensic doctor returns to his remote mountain hometown, where old superstitions and I Ching divination intertwine with a criminal investigation. Xiao Xiao's narrative feature debut after his acclaimed documentary work.</p>
+      <div class="credits">
+        <strong>Director / Writer / DP / Editor:</strong> Xiao Xiao (萧潇)<br>
+        <strong>Previous work:</strong> <em>Turtle Rock</em> (IDFA 2017)
+      </div>
+      <div class="festivals">
+        <div class="label">Festival Selections</div>
+        FIRST IFF 2026 Main Competition &middot; 9th Nara International Film Festival (2026) &middot; Lumen Rio IFF (2026)
+      </div>
+    </div>
+  </article>
+
+  <!-- 2. Summer, Present (2025–2026) -->
+  <article class="film">
+    <div class="film-poster">
+      <img src="img/summer-present.jpg" alt="Summer, Present poster">
+    </div>
+    <div class="film-info">
+      <h2>Summer, Present</h2>
+      <div class="cn-title">夏日宝藏</div>
+      <div class="film-meta">
+        <span class="tag">Fiction Feature</span>
+        <span class="tag">Coming-of-Age</span>
+        <span class="tag">2025&ndash;2026</span>
+      </div>
+      <p class="description">A coming-of-age adventure set in rural Fujian: a city boy spending the summer at his grandmother's befriends the local children, and together they chase a legendary bandit's treasure through ancient village architecture and mountain landscapes.</p>
+      <div class="credits">
+        <strong>Director / Writer:</strong> Huang Huang (黄璜)<br>
+        <strong>Producer:</strong> Feng Yimeng (冯一艨)<br>
+        <strong>Production:</strong> Hainan Yuehe Chuntian Pictures<br>
+        <strong>Filming:</strong> Nanping, Fujian (Aug&ndash;Sep 2025)
+      </div>
+      <div class="festivals">
+        <div class="label">Director's Background</div>
+        Beijing Film Academy &middot; L&eacute;opards de Demain Prize, 62nd Locarno (2008) &middot; Special Award, 31st Tokyo IFF (2018)
+      </div>
+    </div>
+  </article>
+
+  <!-- 3. I Remember (2025) -->
+  <article class="film">
+    <div class="film-poster">
+      <img src="img/i-remember.png" alt="I Remember film poster">
+    </div>
+    <div class="film-info">
+      <h2>I Remember</h2>
+      <div class="cn-title">Story of COVID-19 Memory</div>
+      <div class="film-meta">
+        <span class="tag">Documentary</span>
+        <span class="tag">39 min</span>
+        <span class="tag">2025</span>
+      </div>
+      <p class="description">An intimate documentary capturing the collective trauma and resilience of Wuhan during COVID-19, woven from personal testimonies and memories of the city's lockdown. Jane Deng's NYU thesis film.</p>
+      <div class="credits">
+        <strong>Director:</strong> Jane Deng<br>
+        <strong>Role:</strong> Subtitle Editor (credited on poster)<br>
+        <strong>Production:</strong> NYU Tisch School of the Arts
+      </div>
+      <div class="festivals">
+        <div class="label">Recognition</div>
+        Bronze Medal, 52nd Student Academy Awards
+      </div>
+    </div>
+  </article>
+
+  <!-- 4. Our Water (2024–2025) -->
+  <article class="film">
+    <div class="film-poster">
+      <div class="poster-strip">
+        <img src="img/our-water-1.png" alt="Our Water Episode 1">
+        <img src="img/our-water-2.png" alt="Our Water Episode 2">
+        <img src="img/our-water-3.png" alt="Our Water Episode 3">
+      </div>
+    </div>
+    <div class="film-info">
+      <h2>Our Water</h2>
+      <div class="cn-title">水边人 / Le blues au bord de l'eau</div>
+      <div class="film-meta">
+        <span class="tag">TV Series</span>
+        <span class="tag">3 Episodes</span>
+        <span class="tag">2024&ndash;2025</span>
+        <span class="tag">China / France</span>
+      </div>
+      <p class="description">A three-part China&ndash;France co-production exploring the relationship between people and waterways along Shanghai's Suzhou Creek and the Seine in Paris. Each episode weaves documentary observation with poetic imagery.</p>
+      <div class="credits">
+        <strong>Supervising Director:</strong> Han Meng<br>
+        <strong>Co-Director:</strong> Lucie Szechter<br>
+        <strong>Cinematographer:</strong> Xiao Xiao<br>
+        <strong>Producer:</strong> Vincent Du (DuGood Productions / 24 Images)
+      </div>
+    </div>
+  </article>
+
+  <!-- 5. The Long Departure (2024–2025) -->
+  <article class="film">
+    <div class="film-poster">
+      <div class="poster-duo">
+        <img src="img/long-departure.png" alt="The Long Departure poster">
+        <img src="img/one-day-future.png" alt="One Day in the Future poster">
+      </div>
+    </div>
+    <div class="film-info">
+      <h2>The Long Departure</h2>
+      <div class="cn-title">孩子 &ndash; also known as One Day in the Future (未来的一天)</div>
+      <div class="film-meta">
+        <span class="tag">Short / Feature in Development</span>
+        <span class="tag">38 min (short)</span>
+        <span class="tag">2024&ndash;2025</span>
+      </div>
+      <p class="description">A lesbian couple in China navigates the complexities of starting a family through IVF, while confronting societal expectations and their own families' hopes. Originally pitched as <em>One Day in the Future</em>, the completed short premiered at Golden Horse; the 90-minute feature is in development.</p>
+      <div class="credits">
+        <strong>Directors:</strong> Jiang Xuannian &amp; Ji Hang<br>
+        <strong>Producer:</strong> Vincent Du
+      </div>
+      <div class="festivals">
+        <div class="label">Festivals &amp; Awards</div>
+        Golden Horse Activator Award (2024) &middot; 62nd Taipei Golden Horse Film Festival (2025) &middot; FIRST International Film Festival &middot; Westlake International Documentary Festival
+      </div>
+    </div>
+  </article>
+
+  <!-- 6. Frozen in Time (2024) -->
+  <article class="film">
+    <div class="film-poster">
+      <img src="img/frozen-in-time.png" alt="Frozen in Time documentary">
+    </div>
+    <div class="film-info">
+      <h2>Frozen in Time</h2>
+      <div class="film-meta">
+        <span class="tag">Documentary</span>
+        <span class="tag">2024</span>
+        <span class="tag">The Guardian</span>
+      </div>
+      <p class="description">An interactive documentary following two single Chinese women, Lei and Abu, as they travel to the United States to freeze their eggs, a procedure unavailable to unmarried women in China. Published as part of The Guardian's documentary strand.</p>
+      <div class="credits">
+        <strong>Director:</strong> Guo Rongfei<br>
+        <strong>Publication:</strong> The Guardian (July 2024)
+      </div>
+      <div class="festivals">
+        <div class="label">Reach</div>
+        250,000+ views on YouTube
+      </div>
+      <div class="festivals" style="border-top:none;padding-top:4px;margin-top:4px;">
+        <div class="label">Director's Background</div>
+        NYU graduate, Student Academy Award winner (2016), Tribeca winner, Cannes Cin&eacute;fondation
+      </div>
+    </div>
+  </article>
+
+  <!-- 7. Fibre of Fashion (2024) -->
+  <article class="film">
+    <div class="film-poster">
+      <img src="img/fibre-of-fashion.png" alt="Fibre of Fashion production still">
+    </div>
+    <div class="film-info">
+      <h2>Fibre of Fashion</h2>
+      <div class="cn-title">丝缕人生</div>
+      <div class="film-meta">
+        <span class="tag">Documentary</span>
+        <span class="tag">41 min</span>
+        <span class="tag">2024</span>
+      </div>
+      <p class="description">Women in Shanghai and Paris share intergenerational stories of identity, tradition and transformation, connected through the symbolism of cotton and the global textile trade.</p>
+      <div class="credits">
+        <strong>Director:</strong> Han Meng<br>
+        <strong>Previous work:</strong> <em>Smog Town</em> (IDFA 2019), <em>Chinese Forgotten Daughters</em> (LA Film Festival)
+      </div>
+      <div class="festivals">
+        <div class="label">Festival Selection</div>
+        Beijing International Short Film Festival (BISFF) 2024
+      </div>
+    </div>
+  </article>
+
+  <!-- 8. Land Without Seasons (2024) -->
+  <article class="film">
+    <div class="film-poster">
+      <img src="img/land-without-seasons.jpg" alt="Land Without Seasons poster">
+    </div>
+    <div class="film-info">
+      <h2>Land Without Seasons</h2>
+      <div class="cn-title">无来跑路就现在</div>
+      <div class="film-meta">
+        <span class="tag">Documentary</span>
+        <span class="tag">2024</span>
+      </div>
+      <p class="description">A poetic documentary journey inviting others to tell their own memories. Framed through a train window, the film captures fleeting landscapes and the stories they hold.</p>
+      <div class="credits">
+        <strong>Director / Cinematographer / Editor:</strong> Wang Ziyi (王几)<br>
+        <strong>Producer:</strong> Yijie Sun (孙懿洁)<br>
+        <strong>Translator:</strong> William Clegg (credited on poster)
+      </div>
+      <div class="festivals">
+        <div class="label">Director's Background</div>
+        DocNomads Joint MA programme (Universidade Lus&oacute;fona, 2024&ndash;2026)
+      </div>
+    </div>
+  </article>
+
+  <!-- 9. Family Photo 1991–1999 (2023) -->
+  <article class="film">
+    <div class="film-poster">
+      <img src="img/family-photo.png" alt="Family Photo 1991-1999 poster">
+    </div>
+    <div class="film-info">
+      <h2>Family Photo 1991&ndash;1999</h2>
+      <div class="cn-title">全家福</div>
+      <div class="film-meta">
+        <span class="tag">Documentary</span>
+        <span class="tag">104 min</span>
+        <span class="tag">2023</span>
+      </div>
+      <p class="description">A deeply personal family memoir told through annual portraits, documenting a rural Anhui family across a decade of change. Part of the Caochangdi Workstation's Village Memory Project, the film is an intimate record of ordinary life during China's era of rapid transformation.</p>
+      <div class="credits">
+        <strong>Director:</strong> Liu Tong (刘通)<br>
+        <strong>Production:</strong> Caochangdi Workstation / Village Memory Project<br>
+        <strong>Platform:</strong> CathayPlay
+      </div>
+    </div>
+  </article>
+
+</section>
+
+<footer class="footer">
+  <p>Will Clegg &middot; Chinese&ndash;English Subtitling &middot; <a href="https://www.linkedin.com/in/william-clegg-629455a0/" style="color:var(--accent);text-decoration:none;">LinkedIn</a></p>
+  <p style="margin-top:8px;font-size:0.78rem;">Portfolio updated November 2026</p>
+</footer>
+
+</body>
+</html>
